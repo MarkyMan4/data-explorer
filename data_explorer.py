@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from matplotlib import pyplot as plt
 from pandas.plotting import scatter_matrix
+import altair as alt
 import os
 
 @st.cache
@@ -48,16 +49,18 @@ if st.sidebar.checkbox('Explore'):
         if st.checkbox('Bar chart'):
             st.bar_chart(display_data)
 
-        if st.checkbox('Variable relationship (scatter matrix)'):
-            if len(display_data.columns) < 2:
-                st.write('select at least 2 columns to view this')
-            else:
-                dim = len(display_data.columns) * 2
+        if len(display_data.columns) >= 2:
+            if st.checkbox('Variable relationship (scatter matrix)'):
+                dim = len(selected_cols) * 2
                 fig = plt.figure(figsize=(dim, dim))
                 ax = fig.gca()
                 scatter_matrix(display_data, ax=ax)
                 st.write(fig)
+
+        if ('lat' in selected_cols) and ('lon' in selected_cols):
+            if st.checkbox('Show on map'):
+                st.map(display_data)
     else:
         st.markdown('## Select at least one column')
 else:
-     st.markdown('## Click Explore to start')
+    st.markdown('## Click Explore to start')
