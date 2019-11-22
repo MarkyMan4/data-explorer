@@ -14,12 +14,9 @@ class IsoRegressor:
         self.ir = IsotonicRegression()
 
     def select_columns(self, x, y):
+        self.dataset = self.dataset.sort_values(x)
         x = np.array(self.dataset[x])
         y = np.array(self.dataset[y])
-
-        # can't just sort data because it messes up the relationship between x and y
-        x = np.sort(x)
-        y = np.sort(y)
 
         return x, y
 
@@ -38,7 +35,9 @@ class IsoRegressor:
         plt.plot(x, transformed, 'b.-', markersize=12)
         plt.gca().add_collection(lc)
         plt.legend(('Data', 'Isotonic Fit'), loc='lower right')
-        plt.title('Isotonic regression')
+        plt.title('Isotonic regression', fontsize=24)
+        plt.xlabel(col1, fontsize=18)
+        plt.ylabel(col1, fontsize=18)
         
         return fig
 
