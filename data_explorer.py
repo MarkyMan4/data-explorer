@@ -4,6 +4,8 @@ from matplotlib import pyplot as plt
 from pandas.plotting import scatter_matrix
 import altair as alt
 from iso_regression import IsoRegressor
+from lin_regression import LinRegressor
+from poly_regression import PolyRegressor
 import os
 
 @st.cache
@@ -59,18 +61,49 @@ if len(selected_cols) > 0:
             st.map(display_data)
 
     if st.checkbox('Regression'):
-        x = st.radio('X', selected_cols)
-        y = st.radio('Y', selected_cols)
+        reg_select = st.selectbox('Select a type of regression', ['Linear', 'Isotonic', 'Polynomial'])
 
-        ir = IsoRegressor(display_data)
-        fig = ir.get_graph(x, y)
-        st.write(fig)
+        if reg_select == 'Linear':
+            x = st.radio('X', selected_cols)
+            y = st.radio('Y', selected_cols)
 
-        input = st.text_input(f'Enter a value for {x} to predict {y}')
+            lin_reg = LinRegressor(display_data)
+            fig = lin_reg.get_graph(x, y)
+            st.write(fig)
 
-        if st.button('Predict'):
-            pred = ir.make_prediction(float(input))
-            pred = pred[0] # need to get the first value since the prediction is returned as a list
-            st.write(f'Predicted {y} = {round(pred, 3)}')
+            input = st.text_input(f'Enter a value for {x} to predict {y}')
+
+            if st.button('Predict'):
+                pred = lin_reg.make_prediction(float(input))
+                pred = pred[0] # need to get the first value since the prediction is returned as a list
+                st.write(f'Predicted {y} = {round(pred, 3)}')
+        elif reg_select == 'Isotonic':
+            x = st.radio('X', selected_cols)
+            y = st.radio('Y', selected_cols)
+
+            ir = IsoRegressor(display_data)
+            fig = ir.get_graph(x, y)
+            st.write(fig)
+
+            input = st.text_input(f'Enter a value for {x} to predict {y}')
+
+            if st.button('Predict'):
+                pred = ir.make_prediction(float(input))
+                pred = pred[0] # need to get the first value since the prediction is returned as a list
+                st.write(f'Predicted {y} = {round(pred, 3)}')
+        elif reg_select == 'Polynomial':
+            x = st.radio('X', selected_cols)
+            y = st.radio('Y', selected_cols)
+
+            poly_reg = PolyRegressor(display_data)
+            fig = poly_reg.get_graph(x, y)
+            st.write(fig)
+
+            input = st.text_input(f'Enter a value for {x} to predict {y}')
+
+            if st.button('Predict'):
+                pred = poly_reg.make_prediction(float(input))
+                pred = pred[0][0] # need to get the first value since the prediction is returned as a list
+                st.write(f'Predicted {y} = {round(pred, 3)}')
 else:
     st.markdown('## Select at least one column')
