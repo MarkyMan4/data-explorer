@@ -9,4 +9,5 @@ This app will let you import your own data set and explore it with various visua
 - [ ] compare types of regression and recommend a model based on mean squared error
 - [ ] file upload - feature request exists so devs are aware: https://github.com/streamlit/streamlit/issues/120
 - [ ] improve UI
+- [ ] rather than just predicting a single value, split data into testing and training sets and show MAE
 - [ ] possibly incorporate neural networks, kinda expensive computations for my machine though
