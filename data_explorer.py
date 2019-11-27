@@ -21,7 +21,7 @@ options = []
 for i in range(len(files)):
     options.append(files[i])
 
-st.sidebar.markdown('# Select a file to explore')
+st.sidebar.markdown('# Select data set to explore')
 file_select = st.sidebar.selectbox('Add a file to the data_files directory for it to show on this list', options)
 
 data = load_data(file_select)
@@ -105,5 +105,14 @@ if len(selected_cols) > 0:
                 pred = poly_reg.make_prediction(float(input))
                 pred = pred[0][0] # need to get the first value since the prediction is returned as a list
                 st.write(f'Predicted {y} = {round(pred, 3)}')
+
+    if st.checkbox('Find best model'):
+        x = st.radio('X', selected_cols)
+        y = st.radio('Y', selected_cols)
+
+        lin_reg = LinRegressor(display_data)
+        mae = lin_reg.get_mean_abs_err(x, y)
+
+        st.write(f'Linear regression MAE: {mae}')
 else:
     st.markdown('## Select at least one column')

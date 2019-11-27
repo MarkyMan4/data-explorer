@@ -2,11 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error
 
 class LinRegressor:
 
     dataset = []
     lin_reg = None
+    all_x = None
+    all_y = None
 
     def __init__(self, dataset):
         self.dataset = dataset
@@ -35,6 +38,28 @@ class LinRegressor:
         plt.ylabel(col1, fontsize=18)
         
         return fig
+
+    def get_mean_abs_err(self, col1, col2):
+        lin_reg = LinearRegression()
+
+        mask = np.random.randn(len(self.dataset)) < 0.8
+
+        train = self.dataset[mask]
+        test = self.dataset[~mask]
+
+        train = train.sort_values(col1)
+        test = test.sort_values(col1)
+
+        x = np.array(train[[col1]])
+        y = np.array(train[col2])
+
+        test_x = np.array(test[[col1]])
+        test_y = np.array(test[col2])
+
+        lin_reg.fit(x, y)
+        pred = lin_reg.predict(test_x)
+
+        return round(mean_absolute_error(test_y, pred), 2)
 
     def make_prediction(self, input):
         feature = [[input]]
