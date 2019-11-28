@@ -8,8 +8,6 @@ class LinRegressor:
 
     dataset = []
     lin_reg = None
-    all_x = None
-    all_y = None
 
     def __init__(self, dataset):
         self.dataset = dataset
