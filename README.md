@@ -13,6 +13,7 @@ This app will let you import your own data set and explore it with various visua
 - [ ] possibly incorporate neural networks, kinda expensive computations for my machine though
 - [ ] more options for models
 - [ ] instead of always doing a degree 15 polynomial, test degrees 1 - 15 and choose the one with the lowest MAE
+- [ ] get data from online source
 
 # Issues
 - none for now
