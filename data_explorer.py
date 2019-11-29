@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit import caching
 import pandas as pd
 from matplotlib import pyplot as plt
 from pandas.plotting import scatter_matrix
@@ -167,3 +168,6 @@ elif mode == 'Transform':
 
             transformed_file_name = 'transformed_' + file_select
             transformed_data.to_csv('data_files/' + transformed_file_name, index=False)
+
+            # clear cache so changes are applied without restarting server
+            caching.clear_cache()
