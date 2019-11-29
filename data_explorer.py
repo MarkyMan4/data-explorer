@@ -128,7 +128,7 @@ elif mode == 'Transform':
     if st.checkbox('Show raw data'):
         st.write(data)
 
-    transformation = st.selectbox('Select a transformation', ['-select-', 'Apply change to column'])
+    transformation = st.selectbox('Select a transformation', ['-select-', 'Apply change to column', 'Normalize data'])
 
     if transformation == 'Apply change to column':
         columns_to_change = []
@@ -171,3 +171,6 @@ elif mode == 'Transform':
 
             # clear cache so changes are applied without restarting server
             caching.clear_cache()
+
+    elif transformation == 'Normalize data':
+        st.write('implement l2 norm and normalize between 0 and 1')
