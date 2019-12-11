@@ -120,6 +120,24 @@ if mode == 'Explore':
                 mae = lin_reg.get_mean_abs_err(x, y)
 
                 st.write(f'Linear regression MAE: {mae}')
+
+            if st.checkbox('Basic stats'):
+                dataset = st.radio('Data', selected_cols)
+
+                set_for_stats = display_data[[dataset]]
+
+                mean = set_for_stats.mean()
+                mean = mean[dataset]
+
+                median = set_for_stats.median()
+                median = median[dataset]
+
+                std_dev = set_for_stats.std()
+                std_dev = std_dev[dataset]
+
+                st.write(f'Mean: {round(mean, 3)}')
+                st.write(f'Median: {round(median, 3)}')
+                st.write(f'Standard Deviation: {round(std_dev, 3)}')
     else:
         st.markdown('## Select at least one column')
 elif mode == 'Transform':
